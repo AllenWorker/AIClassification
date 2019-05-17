@@ -5,6 +5,7 @@
  */
 package aiclassification;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -21,6 +22,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 /**
  *
@@ -71,7 +74,7 @@ public class FXMLDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        stageController("start");
         
     }
 
@@ -131,11 +134,40 @@ public class FXMLDocumentController implements Initializable {
         replayPane.setDisable(true);
     }
     
+    public void defaultData()
+    {
+        root = new Node("Is it a mammal?");
+        
+    }
+    
     public void readData()
     {
         try
         {
-            FileInputStream inputFile = new FileInputStream("savedata.dat");
+            File savedata = new File("savedata.dat");
+            if(!savedata.exists()){
+              try
+              {
+                  FileOutputStream outputFile = new FileOutputStream(savedata);
+                  ObjectOutputStream outputObj = new ObjectOutputStream(outputFile);
+                  outputObj.writeObject(root);
+                  outputObj.close();
+                  outputFile.close();
+                  Alert alert = new Alert(AlertType.INFORMATION);
+                  alert.setTitle("New savedata");
+                  alert.setHeaderText(null);
+                  alert.setContentText("savadata doesn't exist! Creating new savedata!");
+
+                  alert.showAndWait();
+              }
+              catch (IOException i)
+              {
+                  
+              }
+            }else{
+              
+            }
+            FileInputStream inputFile = new FileInputStream(savedata);
             ObjectInputStream inputObj = new ObjectInputStream(inputFile);
             root = (Node) inputObj.readObject();
             inputObj.close();
@@ -151,5 +183,42 @@ public class FXMLDocumentController implements Initializable {
             //todo
             return;
         }
+        
     }
+
+    @FXML
+    private void btnHandler(ActionEvent event) 
+    {
+       Button btn = (Button) event.getSource();
+        System.out.println(btn.getId());
+        switch(btn.getId())
+        {
+            case "btnPlay":
+                stageController("guessing");
+                return;
+            case "btnYes":
+                
+                return;
+            case "btnNo":
+                
+                return;
+            case "btnOk":
+                
+                return;
+            case "nBtnYes":
+                
+                return;
+            case "nBtnNo":
+                
+                return;
+            case "btnReplay":
+                
+                return;
+            case "btnEnd":
+                
+                return;
+                
+        }
+    }
+    
 }

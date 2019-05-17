@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 package aiclassification;
-
+import java.io.Serializable;
 /**
  *
  * @author allen
  */
-public class Node {
+public class Node implements Serializable{
     String data;
     Node left;
     Node right;
