@@ -42,8 +42,8 @@ public class BTree {
         }
         else 
         {
-            count += countNode(node.getLeft());
-            count += countNode(node.getRight());
+            count += countNode(node.getNo());
+            count += countNode(node.getYes());
             return count;
         }
     }

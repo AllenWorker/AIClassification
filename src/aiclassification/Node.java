@@ -21,24 +21,24 @@ public class Node implements Serializable{
         right = null;
     }
     
-    public void setLeft(Node node)
+    public void setNo(Node node)
     {
         if (left == null)
             left = node;
     }
     
-    public void setRight(Node node)
+    public void setYes(Node node)
     {
         if (right == null)
             right = node;
     }
     
-    public Node getLeft()
+    public Node getNo()
     {
         return left;
     }
     
-    public Node getRight()
+    public Node getYes()
     {
         return right;
     }

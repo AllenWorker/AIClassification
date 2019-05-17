@@ -74,6 +74,7 @@ public class FXMLDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        readData();
         stageController("start");
         
     }
@@ -138,6 +139,9 @@ public class FXMLDocumentController implements Initializable {
     {
         root = new Node("Is it a mammal?");
         
+        root.setYes(new Node("Monkey"));
+        root.setNo(new Node("Chicken"));
+        
     }
     
     public void readData()
@@ -148,6 +152,7 @@ public class FXMLDocumentController implements Initializable {
             if(!savedata.exists()){
               try
               {
+                  defaultData();
                   FileOutputStream outputFile = new FileOutputStream(savedata);
                   ObjectOutputStream outputObj = new ObjectOutputStream(outputFile);
                   outputObj.writeObject(root);
@@ -159,6 +164,12 @@ public class FXMLDocumentController implements Initializable {
                   alert.setContentText("savadata doesn't exist! Creating new savedata!");
 
                   alert.showAndWait();
+                  FileInputStream inputFile = new FileInputStream(savedata);
+                  ObjectInputStream inputObj = new ObjectInputStream(inputFile);
+                  root = (Node) inputObj.readObject();
+                  inputObj.close();
+                  inputFile.close();
+                  animalTree.setCurrent(root);
               }
               catch (IOException i)
               {
@@ -172,6 +183,7 @@ public class FXMLDocumentController implements Initializable {
             root = (Node) inputObj.readObject();
             inputObj.close();
             inputFile.close();
+            animalTree.setCurrent(root);
         } 
         catch (IOException i)
         {
@@ -195,8 +207,18 @@ public class FXMLDocumentController implements Initializable {
         {
             case "btnPlay":
                 stageController("guessing");
+                questionTxt.setText(animalTree.getCurrent().getData());
                 return;
             case "btnYes":
+                // if reaching the end of the node, ask "is it <animal> ?"
+                animalTree.setCurrent(animalTree.getCurrent().getYes());
+                if (animalTree.getCurrent().getYes()==null && animalTree.getCurrent().getNo()==null)
+                {
+                    questionTxt.setText("Is it "+animalTree.getCurrent().getData()+" ?");
+                } else
+                {
+                    questionTxt.setText(animalTree.getCurrent().getData());
+                }
                 
                 return;
             case "btnNo":

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="aiclassification.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aiclassification.FXMLDocumentController">
    <children>
       <Pane fx:id="startPane" prefHeight="200.0" prefWidth="320.0">
          <children>
@@ -16,8 +16,8 @@
       </Pane>
       <Pane fx:id="guessPane" prefHeight="200.0" prefWidth="320.0" visible="false">
          <children>
-            <Button fx:id="btnYes" layoutX="69.0" layoutY="112.0" mnemonicParsing="false" text="Yes" />
-            <Button fx:id="btnNo" layoutX="192.0" layoutY="112.0" mnemonicParsing="false" text="No" />
+            <Button fx:id="btnYes" layoutX="69.0" layoutY="112.0" mnemonicParsing="false" onAction="#btnHandler" text="Yes" />
+            <Button fx:id="btnNo" layoutX="192.0" layoutY="112.0" mnemonicParsing="false" onAction="#btnHandler" text="No" />
             <Text fx:id="questionTxt" layoutX="77.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Question" wrappingWidth="156.724609375" />
          </children>
       </Pane>
@@ -30,14 +30,14 @@
          <children>
             <Text layoutX="95.0" layoutY="44.0" lineSpacing="2.0" strokeType="OUTSIDE" strokeWidth="0.0" text="I give up. \(QAQ)/  What is the animal in your mind?" textAlignment="CENTER" wrappingWidth="130.0" />
             <TextField fx:id="newAnimalTxt" layoutX="81.0" layoutY="89.0" promptText="Animal Name" />
-            <Button fx:id="btnOk" layoutX="143.0" layoutY="126.0" mnemonicParsing="false" text="OK" />
+            <Button fx:id="btnOk" layoutX="143.0" layoutY="126.0" mnemonicParsing="false" onAction="#btnHandler" text="OK" />
          </children>
       </Pane>
       <Pane fx:id="addQuestionPane" prefHeight="200.0" prefWidth="320.0" visible="false">
          <children>
             <TextField fx:id="newQuestionTxt" layoutX="81.0" layoutY="50.0" />
-            <Button fx:id="nBtnYes" layoutX="63.0" layoutY="123.0" mnemonicParsing="false" text="Yes" />
-            <Button fx:id="nBtnNo" layoutX="224.0" layoutY="123.0" mnemonicParsing="false" text="No" />
+            <Button fx:id="nBtnYes" layoutX="63.0" layoutY="123.0" mnemonicParsing="false" onAction="#btnHandler" text="Yes" />
+            <Button fx:id="nBtnNo" layoutX="224.0" layoutY="123.0" mnemonicParsing="false" onAction="#btnHandler" text="No" />
             <Text layoutX="97.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Asking New Question!" />
             <Label layoutX="78.0" layoutY="85.0" text="And what will the answer be?" />
          </children>
@@ -45,8 +45,8 @@
       <Pane fx:id="replayPane" layoutY="100.0" prefHeight="100.0" prefWidth="320.0" visible="false">
          <children>
             <Label layoutX="84.0" layoutY="14.0" text="Do you want to play again?" />
-            <Button fx:id="btnReplay" layoutX="46.0" layoutY="39.0" mnemonicParsing="false" text="Play again!" />
-            <Button fx:id="btnEnd" layoutX="218.0" layoutY="39.0" mnemonicParsing="false" text="End" />
+            <Button fx:id="btnReplay" layoutX="46.0" layoutY="39.0" mnemonicParsing="false" onAction="#btnHandler" text="Play again!" />
+            <Button fx:id="btnEnd" layoutX="218.0" layoutY="39.0" mnemonicParsing="false" onAction="#btnHandler" text="End" />
          </children>
       </Pane>
    </children>
