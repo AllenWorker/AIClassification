@@ -70,6 +70,11 @@ public class FXMLDocumentController implements Initializable {
     
     BTree animalTree = new BTree();
     Node root;
+    String newAnimal;
+    @FXML
+    private Text askNQTxt;
+    @FXML
+    private Label askAnswerTxt;
     
     
     @Override
@@ -121,6 +126,9 @@ public class FXMLDocumentController implements Initializable {
     }
     public void resetStage()
     {
+        newAnimalTxt.setText(null);
+        newQuestionTxt.setText(null);
+        
         startPane.setVisible(false);
         startPane.setDisable(true);
         guessPane.setVisible(false);
@@ -149,7 +157,8 @@ public class FXMLDocumentController implements Initializable {
         try
         {
             File savedata = new File("savedata.dat");
-            if(!savedata.exists()){
+            if(!savedata.exists())
+            {
               try
               {
                   defaultData();
@@ -169,40 +178,71 @@ public class FXMLDocumentController implements Initializable {
                   root = (Node) inputObj.readObject();
                   inputObj.close();
                   inputFile.close();
-                  animalTree.setCurrent(root);
+                  animalTree.setRoot(root);
+                  animalTree.setCurrent(animalTree.getRoot());
               }
               catch (IOException i)
               {
-                  
+                  Alert alert = new Alert(AlertType.ERROR);
+                  alert.setTitle("Creating New Data Filed!");
+                  alert.setHeaderText(null);
+                  alert.setContentText("Filed to create savedata.dat!");
+                  alert.showAndWait();
               }
-            }else{
-              
             }
             FileInputStream inputFile = new FileInputStream(savedata);
             ObjectInputStream inputObj = new ObjectInputStream(inputFile);
             root = (Node) inputObj.readObject();
             inputObj.close();
             inputFile.close();
-            animalTree.setCurrent(root);
+            animalTree.setRoot(root);
+            animalTree.setCurrent(animalTree.getRoot());
         } 
         catch (IOException i)
         {
-            //todo
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Reading New Data Filed!");
+            alert.setHeaderText(null);
+            alert.setContentText("Filed to read savedata.dat!");
+            alert.showAndWait();
             return;
         }
         catch (ClassNotFoundException c)
         {
-            //todo
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Class Not Found!");
+            alert.setHeaderText(null);
+            alert.setContentText("Class not found!");
+            alert.showAndWait();
             return;
         }
         
+    }
+    
+    public void saveData()
+    {
+        try
+        {
+            FileOutputStream outputFile = new FileOutputStream("savedata.dat");
+            ObjectOutputStream outputObj = new ObjectOutputStream(outputFile);
+            outputObj.writeObject(root);
+            outputObj.close();
+            outputFile.close();
+        }
+        catch (IOException i)
+        {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Saving Data Filed!");
+            alert.setHeaderText(null);
+            alert.setContentText("Filed to save savedata.dat!");
+            alert.showAndWait();
+        }
     }
 
     @FXML
     private void btnHandler(ActionEvent event) 
     {
        Button btn = (Button) event.getSource();
-        System.out.println(btn.getId());
         switch(btn.getId())
         {
             case "btnPlay":
@@ -211,33 +251,104 @@ public class FXMLDocumentController implements Initializable {
                 return;
             case "btnYes":
                 // if reaching the end of the node, ask "is it <animal> ?"
-                animalTree.setCurrent(animalTree.getCurrent().getYes());
-                if (animalTree.getCurrent().getYes()==null && animalTree.getCurrent().getNo()==null)
+                if (animalTree.getCurrent().getYes() != null)
                 {
-                    questionTxt.setText("Is it "+animalTree.getCurrent().getData()+" ?");
-                } else
-                {
-                    questionTxt.setText(animalTree.getCurrent().getData());
+                    animalTree.setCurrent(animalTree.getCurrent().getYes());
+                    if (animalTree.getCurrent().getYes()==null && animalTree.getCurrent().getNo()==null)
+                    {
+                        questionTxt.setText("Is it "+animalTree.getCurrent().getData()+" ?");
+                    } 
+                    else
+                    {
+                        questionTxt.setText(animalTree.getCurrent().getData());
+                    }
                 }
-                
+                else
+                {
+                    stageController("result");
+                    thxTxt.setText("I won! \\(>w<)/ The Answe is "+ animalTree.getCurrent().getData() + "!");
+                }
                 return;
             case "btnNo":
-                
+                if (animalTree.getCurrent().getNo() != null)
+                {
+                    animalTree.setCurrent(animalTree.getCurrent().getNo());
+                    if (animalTree.getCurrent().getYes()==null && animalTree.getCurrent().getNo()==null)
+                    {
+                        questionTxt.setText("Is it "+animalTree.getCurrent().getData()+" ?");
+                    } 
+                    else
+                    {
+                        questionTxt.setText(animalTree.getCurrent().getData());
+                    }
+                }
+                else
+                {
+                    stageController("giveup");   
+                }
                 return;
             case "btnOk":
                 
+                if (!newAnimalTxt.getText().isEmpty())
+                {
+                    newAnimal = newAnimalTxt.getText();
+                    stageController("add");
+                    askNQTxt.setText("What is the difference between "+newAnimal + " and " + animalTree.getCurrent().getData()+ "?");
+                }
+                else
+                {
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Please");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Please tell me what the animal is in your mind!");
+                }
                 return;
             case "nBtnYes":
-                
+                if(!newQuestionTxt.getText().isEmpty())
+                {
+                    String temp = animalTree.getCurrent().getData();
+                    animalTree.getCurrent().setData(newQuestionTxt.getText());
+                    animalTree.getCurrent().setYes(new Node(newAnimal));
+                    animalTree.getCurrent().setNo(new Node(temp));
+                    saveData();
+                    stageController("result");
+                    thxTxt.setText("Now I remember! You won't beat me next time!");
+                }
+                else
+                {
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Question?");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Please tell me what the question is!");
+                }
                 return;
             case "nBtnNo":
-                
+                if(!newQuestionTxt.getText().isEmpty())
+                {
+                    String temp = animalTree.getCurrent().getData();
+                    animalTree.getCurrent().setData(newQuestionTxt.getText());
+                    animalTree.getCurrent().setYes(new Node(temp));
+                    animalTree.getCurrent().setNo(new Node(newAnimal));
+                    saveData();
+                    stageController("result");
+                    thxTxt.setText("Now I remember! You won't beat me next time!");
+                }
+                else
+                {
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Question?");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Please tell me what the question is!");
+                }
                 return;
             case "btnReplay":
-                
+                resetStage();
+                animalTree.setCurrent(root);
+                stageController("guessing");
+                questionTxt.setText(animalTree.getCurrent().getData());
                 return;
             case "btnEnd":
-                
+                System.exit(0);
                 return;
                 
         }

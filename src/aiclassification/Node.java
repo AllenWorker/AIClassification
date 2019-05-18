@@ -10,9 +10,9 @@ import java.io.Serializable;
  * @author allen
  */
 public class Node implements Serializable{
-    String data;
-    Node left;
-    Node right;
+    private String data;
+    private Node left;
+    private Node right;
     
     public Node(String data)
     {
@@ -50,7 +50,7 @@ public class Node implements Serializable{
     
     public void setData(String node)
     {
-        this.data = data;
+        this.data = node;
     }
     
 }
