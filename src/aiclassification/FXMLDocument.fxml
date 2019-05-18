@@ -9,9 +9,10 @@
 
 <AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aiclassification.FXMLDocumentController">
    <children>
-      <Pane fx:id="startPane" prefHeight="200.0" prefWidth="320.0" visible="false">
+      <Pane fx:id="startPane" prefHeight="200.0" prefWidth="320.0">
          <children>
-            <Button fx:id="btnPlay" layoutX="133.0" layoutY="89.0" mnemonicParsing="false" onAction="#btnHandler" text="Play!" />
+            <Button fx:id="btnPlay" layoutX="139.0" layoutY="123.0" mnemonicParsing="false" onAction="#btnHandler" text="Play!" />
+            <Text layoutX="10.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is a Animal guessing Game!. Please think one Animal in your mind and answer the Yes/No question. If I can't guess it right, Please tell me the Answer and think one Yes/No question to make me Powerful! /( O w O)\" textAlignment="CENTER" wrappingWidth="300.0" />
          </children>
       </Pane>
       <Pane fx:id="guessPane" prefHeight="200.0" prefWidth="320.0" visible="false">
@@ -28,7 +29,7 @@
       </Pane>
       <Pane fx:id="giveupPane" prefHeight="200.0" prefWidth="320.0" visible="false">
          <children>
-            <Text layoutX="85.0" layoutY="43.0" lineSpacing="2.0" strokeType="OUTSIDE" strokeWidth="0.0" text="I give up. \(QAQ)/  What is the animal in your mind?" textAlignment="CENTER" wrappingWidth="150.0" />
+            <Text layoutX="85.0" layoutY="43.0" lineSpacing="2.0" strokeType="OUTSIDE" strokeWidth="0.0" text="I give up. \( Q A Q )/  What is the animal in your mind?" textAlignment="CENTER" wrappingWidth="150.0" />
             <TextField fx:id="newAnimalTxt" layoutX="81.0" layoutY="89.0" promptText="Animal Name" />
             <Button fx:id="btnOk" layoutX="143.0" layoutY="126.0" mnemonicParsing="false" onAction="#btnHandler" text="OK" />
          </children>

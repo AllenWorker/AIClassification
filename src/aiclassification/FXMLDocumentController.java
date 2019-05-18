@@ -17,7 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import java.io.FileInputStream;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -247,7 +246,7 @@ public class FXMLDocumentController implements Initializable {
         {
             case "btnPlay":
                 stageController("guessing");
-                questionTxt.setText(animalTree.getCurrent().getData());
+                questionTxt.setText(animalTree.getCurrent().getData() + "  <( - w - \\)");
                 return;
             case "btnYes":
                 // if reaching the end of the node, ask "is it <animal> ?"
@@ -256,17 +255,17 @@ public class FXMLDocumentController implements Initializable {
                     animalTree.setCurrent(animalTree.getCurrent().getYes());
                     if (animalTree.getCurrent().getYes()==null && animalTree.getCurrent().getNo()==null)
                     {
-                        questionTxt.setText("Is it "+animalTree.getCurrent().getData()+" ?");
+                        questionTxt.setText("Is it "+animalTree.getCurrent().getData()+" ?  <( 0 w 0 )/");
                     } 
                     else
                     {
-                        questionTxt.setText(animalTree.getCurrent().getData());
+                        questionTxt.setText(animalTree.getCurrent().getData() + "  \\( - w - )/");
                     }
                 }
                 else
                 {
                     stageController("result");
-                    thxTxt.setText("I won! \\(>w<)/ The Answe is "+ animalTree.getCurrent().getData() + "!");
+                    thxTxt.setText("I won! \\( > w < )/ The Answe is "+ animalTree.getCurrent().getData() + "!");
                 }
                 return;
             case "btnNo":
@@ -275,11 +274,11 @@ public class FXMLDocumentController implements Initializable {
                     animalTree.setCurrent(animalTree.getCurrent().getNo());
                     if (animalTree.getCurrent().getYes()==null && animalTree.getCurrent().getNo()==null)
                     {
-                        questionTxt.setText("Is it "+animalTree.getCurrent().getData()+" ?");
+                        questionTxt.setText("Is it "+animalTree.getCurrent().getData()+" ? ( > A < \")");
                     } 
                     else
                     {
-                        questionTxt.setText(animalTree.getCurrent().getData());
+                        questionTxt.setText(animalTree.getCurrent().getData()+ "  ( O A O )");
                     }
                 }
                 else
@@ -312,7 +311,7 @@ public class FXMLDocumentController implements Initializable {
                     animalTree.getCurrent().setNo(new Node(temp));
                     saveData();
                     stageController("result");
-                    thxTxt.setText("Now I remember! You won't beat me next time!");
+                    thxTxt.setText("Now I remember! You won't beat me next time! \\( > A < )/");
                 }
                 else
                 {
@@ -331,7 +330,7 @@ public class FXMLDocumentController implements Initializable {
                     animalTree.getCurrent().setNo(new Node(newAnimal));
                     saveData();
                     stageController("result");
-                    thxTxt.setText("Now I remember! You won't beat me next time!");
+                    thxTxt.setText("Now I remember! You won't beat me next time! \\( > A < )/");
                 }
                 else
                 {
