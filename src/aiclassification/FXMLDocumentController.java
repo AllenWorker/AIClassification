@@ -82,7 +82,15 @@ public class FXMLDocumentController implements Initializable {
         stageController("start");
         
     }
-
+    /***
+     * Control the Game progress.
+     * start        -show welcome message and play button.
+     * guessing     -show question and yes no button.
+     * giveup       -when the program can not guess the animal, show input and let user tell the answer./n
+     * add          -Add new Question.
+     * result       -show Win or Defeat message and show "play again", "End" button.
+     * @param stage string that indicate the scene.
+     */
     public void stageController(String stage)
     {
         switch(stage)
@@ -123,6 +131,9 @@ public class FXMLDocumentController implements Initializable {
                 return;
         }
     }
+    /***
+     * Reset the stages.
+     */
     public void resetStage()
     {
         newAnimalTxt.setText(null);
@@ -142,6 +153,9 @@ public class FXMLDocumentController implements Initializable {
         replayPane.setDisable(true);
     }
     
+    /***
+     * Create default data
+     */
     public void defaultData()
     {
         root = new Node("Is it a mammal?");
@@ -151,6 +165,10 @@ public class FXMLDocumentController implements Initializable {
         
     }
     
+    /***
+     * Read file "savedata.dat".
+     * Will create one with the default data if doesn't exit.
+     */
     public void readData()
     {
         try
@@ -217,7 +235,9 @@ public class FXMLDocumentController implements Initializable {
         }
         
     }
-    
+    /***
+     * Save "savedata.dat" at root folder
+     */
     public void saveData()
     {
         try
